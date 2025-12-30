@@ -26,6 +26,8 @@ function Tabzy(selector) {
 
   if (hasError) return;
 
+  this._originalHTML = this.container.innerHTML;
+
   this._init();
 }
 
@@ -54,4 +56,33 @@ Tabzy.prototype._activeTab = function (tab) {
 
   const panelActive = document.querySelector(tab.getAttribute("href"));
   panelActive.hidden = false;
+};
+
+Tabzy.prototype.switch = function (input) {
+  let tabToActive = null;
+
+  if (typeof input === "string") {
+    tabToActive = this.tabs.find((tab) => tab.getAttribute("href") === input);
+    if (!tabToActive) {
+      console.error(`Tabzy: No panel found with ID '${input}'`);
+      return;
+    }
+  } else if (this.tabs.includes(input)) {
+    tabToActive = input;
+  }
+
+  if (!tabToActive) {
+    console.error(`Tabzy: Invalid input '${input}'`);
+    return;
+  }
+
+  this._activeTab(tabToActive);
+};
+
+Tabzy.prototype.destroy = function () {
+  this.container.innerHTML = this._originalHTML;
+  this.panels.forEach((panel) => (panel.hidden = false));
+  this.container = null;
+  this.tabs = null;
+  this.panels = null;
 };
