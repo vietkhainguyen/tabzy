@@ -5,42 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tabzy</title>
     <link rel="stylesheet" href="./src/tabzy.css" />
+    <style>
+      .tabzy--active a {
+        color: red;
+        font-weight: 600;
+      }
+
+      .demo1 {
+        background: #666;
+      }
+
+      .tabs1 {
+        display: flex;
+        list-style: none;
+      }
+
+      .tabs1 a {
+        display: inline-block;
+        text-decoration: none;
+        padding: 10px 20px;
+        background: #ccc;
+        border-bottom: 2px solid #ccc;
+      }
+
+      .tabs1 .tabzy--active a {
+        background: #fff;
+        border-color: red;
+      }
+
+      .demo1 .panels {
+        padding: 20px;
+        background: #fff;
+      }
+
+      .demo2 {
+        display: flex;
+        margin-top: 60px;
+      }
+
+      .demo2 .panels {
+        padding-left: 30px;
+        margin-top: 15px;
+      }
+    </style>
   </head>
   <body>
-    <!-- Container -->
-    <ul id="tabs1">
-      <!-- Tabs -->
-      <li class="tabzy--active">
-        <a href="#tab1">Tab 1</a>
-      </li>
-      <li>
-        <a href="#tab2">Tab 2</a>
-      </li>
-      <li>
-        <a href="#tab3">Tab 3</a>
-      </li>
-    </ul>
-    <!-- Panels -->
-    <div id="tab1">Tab1 Content</div>
-    <div id="tab2">Tab2 Content</div>
-    <div id="tab3">Tab3 Content</div>
+    <div class="demo1">
+      <ul id="tabs1" class="tabs1">
+        <!-- Tabs -->
+        <li class="tabzy--active">
+          <a href="#tab1">Tab 1</a>
+        </li>
+        <li>
+          <a href="#tab2">Tab 2</a>
+        </li>
+        <li>
+          <a href="#tab3">Tab 3</a>
+        </li>
+      </ul>
+      <!-- Panels -->
+      <div class="panels">
+        <div id="tab1">Tab1 Content</div>
+        <div id="tab2">Tab2 Content</div>
+        <div id="tab3">Tab3 Content</div>
+      </div>
+    </div>
 
-    <ul id="tabs2">
-      <!-- Tabs -->
-      <li class="tabzy--active">
-        <a href="#tabA">Tab A</a>
-      </li>
-      <li>
-        <a href="#tabB">Tab B</a>
-      </li>
-      <li>
-        <a href="#tabC">Tab C</a>
-      </li>
-    </ul>
-    <!-- Panels -->
-    <div id="tabA">TabA Content</div>
-    <div id="tabB">TabB Content</div>
-    <div id="tabC">TabC Content</div>
+    <div class="demo2">
+      <ul id="tabs2" class="tabs2">
+        <!-- Tabs -->
+        <li class="tabzy--active">
+          <a href="#tabA">Tab A</a>
+        </li>
+        <li>
+          <a href="#tabB">Tab B</a>
+        </li>
+        <li>
+          <a href="#tabC">Tab C</a>
+        </li>
+      </ul>
+
+      <div class="panels">
+        <!-- Panels -->
+        <div id="tabA">TabA Content</div>
+        <div id="tabB">TabB Content</div>
+        <div id="tabC">TabC Content</div>
+      </div>
+    </div>
 
     <script src="./src/tabzy.js"></script>
     <script>
