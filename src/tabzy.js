@@ -1,7 +1,7 @@
 function Tabzy(selector, options = {}) {
   this.container = document.querySelector(selector);
   if (!this.container) {
-    console.error(`Tabzy: No container found for selector: ${selector}`);
+    console.error(`Tabzy: No container found for selector '${selector}'`);
     return;
   }
 
@@ -10,12 +10,9 @@ function Tabzy(selector, options = {}) {
     console.error(`Tabzy: No tabs found inside the container`);
     return;
   }
+  this.panels = this.getPanels();
 
-  let hasError = false;
-
-  this.panels = this._getPanels();
-
-  if (hasError) return;
+  if (this.tabs.length !== this.panels.length) return;
 
   this.opt = Object.assign(
     {
@@ -33,17 +30,18 @@ function Tabzy(selector, options = {}) {
   this._init();
 }
 
-Tabzy.prototype._getPanels = function () {
-  return this.tabs.map((tab) => {
-    const panel = document.querySelector(tab.getAttribute("href"));
-    if (!panel) {
-      hasError = true;
-      console.error(
-        `Tabzy: No panels found selector: '${tab.getAttribute("href")};'`
-      );
-    }
-    return panel;
-  });
+Tabzy.prototype.getPanels = function () {
+  return this.tabs
+    .map((tab) => {
+      const panel = document.querySelector(tab.getAttribute("href"));
+      if (!panel) {
+        console.error(
+          `Tabzy: No panel found for selector '${tab.getAttribute("href")}'`
+        );
+      }
+      return panel;
+    })
+    .filter(Boolean);
 };
 
 Tabzy.prototype._init = function () {
@@ -59,8 +57,7 @@ Tabzy.prototype._init = function () {
     this.tabs[0];
 
   this.currentTab = tab;
-
-  this._activeTab(tab, false, false);
+  this._activateTab(tab, false, false);
 
   this.tabs.forEach((tab) => {
     tab.onclick = (event) => {
@@ -72,12 +69,12 @@ Tabzy.prototype._init = function () {
 
 Tabzy.prototype._tryActivateTab = function (tab) {
   if (this.currentTab !== tab) {
-    this._activeTab(tab);
     this.currentTab = tab;
+    this._activateTab(tab);
   }
 };
 
-Tabzy.prototype._activeTab = function (
+Tabzy.prototype._activateTab = function (
   tab,
   triggerOnChange = true,
   updateURL = this.opt.remember
@@ -122,7 +119,6 @@ Tabzy.prototype.switch = function (input) {
     console.error(`Tabzy: Invalid input '${input}'`);
     return;
   }
-
   this._tryActivateTab(tab);
 };
 
